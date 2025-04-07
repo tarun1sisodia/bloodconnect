@@ -1,51 +1,74 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Load environment variables
+// Route imports
+import authRoutes from './src/routes/auth.js';
+import usersRoutes from './src/routes/users.js';
+import requestsRoutes from './src/routes/requests.js';
+import donationsRoutes from './src/routes/donations.js';
+import matchRoutes from './src/routes/match.js';
+
+// Initialize environment variables
 dotenv.config();
 
-// Import routes
-const authRoutes = require('./src/routes/auth');
-const userRoutes = require('./src/routes/users');
-const requestRoutes = require('./src/routes/requests');
-const donationRoutes = require('./src/routes/donations');
-const matchRoutes = require('./src/routes/match');
-const configRoutes = require('./src/routes/config');
-
-// Initialize Express app
+// Create Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
+mongoose.set('strictQuery', false);
 app.use(express.json());
 app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/bloodconnect', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => console.log('MongoDB connected'))
   .catch(err => {
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
 
-// API Routes
+// Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/requests', requestRoutes);
-app.use('/api/donations', donationRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/requests', requestsRoutes);
+app.use('/api/donations', donationsRoutes);
 app.use('/api/match', matchRoutes);
-app.use('/api/config', configRoutes);
+
+// Config endpoint for frontend
+app.get('/api/config', (req, res) => {
+  res.json({
+    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseKey: process.env.SUPABASE_ANON_KEY
+  });
+});
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, '../frontend')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend', 'index.html'));
+  });
+}
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ msg: 'Server error', error: err.message });
+  res.status(500).send('Server Error');
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

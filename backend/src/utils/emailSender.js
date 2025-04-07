@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -28,95 +28,8 @@ const createTransporter = () => {
   });
 };
 
-// Email templates
-const emailTemplates = {
-  // Welcome email when a user registers
-  welcome: (name) => ({
-    subject: 'Welcome to BloodConnect',
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e5e5; border-radius: 5px;">
-               <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="color: #e53e3e;">BloodConnect</h1>
-        </div>
-        <div>
-          <h2>Welcome, ${name}!</h2>
-          <p>Thank you for joining BloodConnect. We're excited to have you as part of our community dedicated to saving lives through blood donation.</p>
-          <p>With your BloodConnect account, you can:</p>
-          <ul>
-            <li>Register as a blood donor</li>
-            <li>Find blood donors in your area</li>
-            <li>Make blood donation requests</li>
-            <li>Track your donation history</li>
-          </ul>
-          <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
-          <div style="margin-top: 30px; text-align: center;">
-            <a href="${process.env.FRONTEND_URL || 'http://localhost:8081'}" style="background-color: #e53e3e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Visit BloodConnect</a>
-          </div>
-        </div>
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e5e5; text-align: center; font-size: 12px; color: #666;">
-          <p>© ${new Date().getFullYear()} BloodConnect. All rights reserved.</p>
-          <p>123 Blood Center St., City, State 12345</p>
-        </div>
-      </div>
-    `
-  }),
-
-  // New blood request notification to potential donors
-  donorMatch: (donorName, patientName, bloodType, hospital, location) => ({
-    subject: `Urgent: Blood Donation Request for ${bloodType}`,
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e5e5; border-radius: 5px;">
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="color: #e53e3e;">BloodConnect</h1>
-        </div>
-        <div>
-          <h2>Hello, ${donorName}!</h2>
-          <p>We have an urgent request for <strong>${bloodType}</strong> blood type in your area.</p>
-          <p><strong>Patient:</strong> ${patientName}</p>
-          <p><strong>Hospital:</strong> ${hospital}</p>
-          <p><strong>Location:</strong> ${location}</p>
-          <p>As a registered donor with a matching blood type, your help could save a life. If you're available to donate, please respond as soon as possible.</p>
-          <div style="margin-top: 30px; text-align: center;">
-            <a href="${process.env.FRONTEND_URL || 'http://localhost:8081'}/login.html" style="background-color: #e53e3e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Respond to Request</a>
-          </div>
-        </div>
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e5e5; text-align: center; font-size: 12px; color: #666;">
-          <p>© ${new Date().getFullYear()} BloodConnect. All rights reserved.</p>
-          <p>If you no longer wish to receive these notifications, you can update your preferences in your profile settings.</p>
-        </div>
-      </div>
-    `
-  }),
-
-  // Request status update to requester
-  requestUpdate: (requesterName, patientName, status, donorCount) => ({
-    subject: `Update on Blood Request for ${patientName}`,
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e5e5; border-radius: 5px;">
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="color: #e53e3e;">BloodConnect</h1>
-        </div>
-        <div>
-          <h2>Hello, ${requesterName}!</h2>
-          <p>We have an update on your blood request for ${patientName}.</p>
-          <p>Status: <strong>${status}</strong></p>
-          ${donorCount ? `<p>We've found ${donorCount} potential donors who have been notified of your request.</p>` : ''}
-          <p>You can check the details and contact information of matched donors by logging into your account.</p>
-          <div style="margin-top: 30px; text-align: center;">
-            <a href="${process.env.FRONTEND_URL || 'http://localhost:8081'}/login.html" style="background-color: #e53e3e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View Request Details</a>
-          </div>
-        </div>
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e5e5; text-align: center; font-size: 12px; color: #666;">
-          <p>© ${new Date().getFullYear()} BloodConnect. All rights reserved.</p>
-          <p>If you need immediate assistance, please contact our support team.</p>
-        </div>
-      </div>
-    `
-  })
-};
-
 // Send email function
-const sendEmail = async (to, subject, html, options = {}) => {
+export const sendEmail = async (to, subject, html, options = {}) => {
   try {
     // Check if email sending is disabled in development
     if (process.env.NODE_ENV === 'development' && process.env.DISABLE_EMAILS === 'true') {
@@ -166,15 +79,8 @@ const sendEmail = async (to, subject, html, options = {}) => {
 };
 
 // Send templated email
-const sendTemplatedEmail = async (to, templateName, templateData = {}, options = {}) => {
+export const sendTemplatedEmail = async (to, templateFn, templateData = {}, options = {}) => {
   try {
-    // Get template function
-    const templateFn = emailTemplates[templateName];
-    
-    if (!templateFn) {
-      throw new Error(`Email template '${templateName}' not found`);
-    }
-    
     // Get email content from template
     const { subject, html } = templateFn(...Object.values(templateData));
     
@@ -192,7 +98,7 @@ const sendTemplatedEmail = async (to, templateName, templateData = {}, options =
 };
 
 // Send bulk emails
-const sendBulkEmails = async (emailsData) => {
+export const sendBulkEmails = async (emailsData) => {
   const results = [];
   
   for (const emailData of emailsData) {
@@ -205,22 +111,109 @@ const sendBulkEmails = async (emailsData) => {
 };
 
 // Send bulk templated emails
-const sendBulkTemplatedEmails = async (templatedEmailsData) => {
+export const sendBulkTemplatedEmails = async (templatedEmailsData) => {
   const results = [];
   
   for (const emailData of templatedEmailsData) {
-    const { to, templateName, templateData = {}, options = {} } = emailData;
-    const result = await sendTemplatedEmail(to, templateName, templateData, options);
+    const { to, templateFn, templateData = {}, options = {} } = emailData;
+    const result = await sendTemplatedEmail(to, templateFn, templateData, options);
     results.push(result);
   }
   
   return results;
 };
 
-module.exports = {
-  sendEmail,
-  sendTemplatedEmail,
-  sendBulkEmails,
-  sendBulkTemplatedEmails,
-  emailTemplates
+// Email templates
+export const emailTemplates = {
+  // Welcome email template
+  welcome: (name) => {
+    return {
+      subject: 'Welcome to BloodConnect!',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #e53e3e;">Welcome to BloodConnect!</h1>
+          <p>Hello ${name},</p>
+          <p>Thank you for joining BloodConnect. We're excited to have you as part of our community dedicated to saving lives through blood donation.</p>
+          <p>With your account, you can:</p>
+          <ul>
+            <li>Find blood donors in your area</li>
+            <li>Create blood donation requests</li>
+            <li>Track your donation history</li>
+            <li>Connect with people in need</li>
+          </ul>
+          <p>If you have any questions, please don't hesitate to contact us.</p>
+          <p>Best regards,<br>The BloodConnect Team</p>
+        </div>
+      `
+    };
+  },
+  
+  // Blood request created template
+  requestCreated: (requestDetails) => {
+    return {
+      subject: 'Your Blood Request Has Been Created',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #e53e3e;">Blood Request Created</h1>
+          <p>Your blood request for ${requestDetails.patientName} has been created successfully.</p>
+          <p>Request details:</p>
+          <ul>
+            <li>Blood Type: ${requestDetails.bloodType}</li>
+            <li>Units Needed: ${requestDetails.units}</li>
+            <li>Hospital: ${requestDetails.hospital}</li>
+            <li>Urgency: ${requestDetails.urgency}</li>
+          </ul>
+          <p>We will notify you when we find matching donors.</p>
+          <p>Best regards,<br>The BloodConnect Team</p>
+        </div>
+      `
+    };
+  },
+  
+  // Donor match notification template
+  donorMatch: (requestDetails, donorCount) => {
+    return {
+      subject: 'Matching Donors Found for Your Blood Request',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #e53e3e;">Matching Donors Found</h1>
+          <p>Good news! We've found ${donorCount} potential donors for your blood request.</p>
+          <p>Request details:</p>
+          <ul>
+            <li>Patient: ${requestDetails.patientName}</li>
+            <li>Blood Type: ${requestDetails.bloodType}</li>
+            <li>Hospital: ${requestDetails.hospital}</li>
+          </ul>
+          <p>The donors have been notified and will contact you if they're available to donate.</p>
+          <p>Best regards,<br>The BloodConnect Team</p>
+        </div>
+      `
+    };
+  },
+  
+  // Donation request notification template
+  donationRequest: (requesterName, requestDetails) => {
+    return {
+      subject: 'Urgent: Blood Donation Request',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #e53e3e;">Blood Donation Request</h1>
+          <p>Hello,</p>
+          <p>${requesterName} is looking for blood donors with blood type ${requestDetails.bloodType}.</p>
+          <p>Request details:</p>
+          <ul>
+            <li>Patient: ${requestDetails.patientName}</li>
+            <li>Blood Type: ${requestDetails.bloodType}</li>
+            <li>Units Needed: ${requestDetails.units}</li>
+            <li>Hospital: ${requestDetails.hospital}</li>
+            <li>Location: ${requestDetails.location}</li>
+            <li>Urgency: ${requestDetails.urgency}</li>
+          </ul>
+          <p>If you're available to donate, please log in to your BloodConnect account and volunteer for this request.</p>
+          <p>Your donation can save a life!</p>
+          <p>Best regards,<br>The BloodConnect Team</p>
+        </div>
+      `
+    };
+  }
 };

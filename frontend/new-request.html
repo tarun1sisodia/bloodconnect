@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>New Blood Request - BloodConnect</title>
+          <meta name="description" content="Submit a new blood donation request" />
+          <script src="https://cdn.tailwindcss.com"></script>
+          <script>
+                    tailwind.config = {
+                              theme: {
+                                        extend: {
+                                                  colors: {
+                                                            primary: "#e53e3e", // Red color
+                                                            secondary: "#f56565",
+                                                  },
+                                        },
+                              },
+                    };
+          </script>
+          <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-gray-50">
+          <!-- Navbar -->
+          <header class="bg-primary text-white py-4">
+                    <div class="container mx-auto flex items-center justify-between px-4">
+                              <a href="index.html" class="flex items-center gap-2 text-xl font-bold">
+                                        <span class="lucide lucide-droplet h-6 w-6"></span>
+                                        <span>BloodConnect</span>
+                              </a>
+
+                              <nav class="hidden md:flex items-center gap-6">
+                                        <a href="index.html" class="hover:text-opacity-80 transition-colors">Home</a>
+                                        <a href="about.html" class="hover:text-opacity-80 transition-colors">About</a>
+                                        <a href="donors.html" class="hover:text-opacity-80 transition-colors">Donors</a>
+                                        <a href="requests.html"
+                                                  class="hover:text-opacity-80 transition-colors">Requests</a>
+                                        <a href="contact.html"
+                                                  class="hover:text-opacity-80 transition-colors">Contact</a>
+                              </nav>
+
+                              <div class="flex items-center gap-3">
+                                        <a href="login.html"
+                                                  class="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Login</a>
+                                        <a href="register.html"
+                                                  class="hidden md:block bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Register</a>
+                              </div>
+
+                              <!-- Mobile menu button -->
+                              <button id="mobileMenuButton" class="md:hidden text-white">
+                                        <span class="lucide lucide-menu h-6 w-6"></span>
+                              </button>
+                    </div>
+
+                    <!-- Mobile menu (hidden by default) -->
+                    <div id="mobileMenu" class="md:hidden hidden px-4 py-2 bg-primary/90">
+                              <nav class="flex flex-col space-y-2">
+                                        <a href="index.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Home</a>
+                                        <a href="about.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">About</a>
+                                        <a href="donors.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Donors</a>
+                                        <a href="requests.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Requests</a>
+                                        <a href="contact.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Contact</a>
+                                        <a href="register.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Register</a>
+                              </nav>
+                    </div>
+          </header>
+
+          <!-- Page Content -->
+          <div class="container mx-auto px-4 py-12">
+                    <div class="max-w-2xl mx-auto">
+                              <div class="mb-6">
+                                        <a href="requests.html" class="flex items-center text-primary hover:underline">
+                                                  <span class="lucide lucide-arrow-left mr-2"
+                                                            style="width: 16px; height: 16px;"></span>
+                                                  Back to Requests
+                                        </a>
+                              </div>
+
+                              <div class="bg-white rounded-lg shadow-sm p-6">
+                                        <h1 class="text-2xl font-bold mb-6">Submit a Blood Request</h1>
+
+                                        <form id="requestForm" data-form-type="requestForm">
+                                                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                                            <div>
+                                                                      <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                                for="patientName">
+                                                                                Patient Name *
+                                                                      </label>
+                                                                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                id="patientName" type="text" required>
+                                                            </div>
+
+                                                            <div>
+                                                                      <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                                for="bloodType">
+                                                                                Blood Type *
+                                                                      </label>
+                                                                      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                id="bloodType" required>
+                                                                                <option value="">Select Blood Type
+                                                                                </option>
+                                                                                <option value="A+">A+</option>
+                                                                                <option value="A-">A-</option>
+                                                                                <option value="B+">B+</option>
+                                                                                <option value="B-">B-</option>
+                                                                                <option value="AB+">AB+</option>
+                                                                                <option value="AB-">AB-</option>
+                                                                                <option value="O+">O+</option>
+                                                                                <option value="O-">O-</option>
+                                                                      </select>
+                                                            </div>
+
+                                                            <div>
+                                                                      <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                                for="units">
+                                                                                Units Needed *
+                                                                      </label>
+                                                                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                id="units" type="number" min="1"
+                                                                                required>
+                                                            </div>
+
+                                                            <div>
+                                                                      <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                                for="hospital">
+                                                                                Hospital Name *
+                                                                      </label>
+                                                                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                id="hospital" type="text" required>
+                                                            </div>
+
+                                                            <div>
+                                                                      <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                                for="location">
+                                                                                Location *
+                                                                      </label>
+                                                                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                id="location" type="text" required>
+                                                            </div>
+
+                                                            <div>
+                                                                      <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                                for="urgency">
+                                                                                Urgency Level *
+                                                                      </label>
+                                                                      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                                id="urgency" required>
+                                                                                <option value="">Select Urgency</option>
+                                                                                <option value="low">Low</option>
+                                                                                <option value="medium">Medium</option>
+                                                                                <option value="high">High</option>
+                                                                                <option value="emergency">Emergency
+                                                                                </option>
+                                                                      </select>
+                                                            </div>
+                                                  </div>
+
+                                                  <div class="mb-6">
+                                                            <label class="block text-gray-700 text-sm font-bold mb-2"
+                                                                      for="notes">
+                                                                      Additional Notes
+                                                            </label>
+                                                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                                      id="notes" rows="4"></textarea>
+                                                  </div>
+
+                                                  <div class="flex justify-end gap-3">
+                                                            <a href="requests.html"
+                                                                      class="border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-md">
+                                                                      Cancel
+                                                            </a>
+                                                            <button type="submit"
+                                                                      class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md font-medium">
+                                                                      Submit Request
+                                                            </button>
+                                                  </div>
+                                        </form>
+                              </div>
+                    </div>
+          </div>
+
+          <!-- Footer -->
+          <footer class="bg-primary text-white py-8 mt-12">
+                    <div class="container mx-auto px-4">
+                              <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                                        <div>
+                                                  <div class="flex items-center gap-2 mb-4">
+                                                            <span class="lucide lucide-droplet h-6 w-6"></span>
+                                                            <span class="text-xl font-bold">BloodConnect</span>
+                                                  </div>
+                                                  <p class="text-sm mb-4">
+                                                            Connecting donors with those in need to save lives through
+                                                            blood donation.
+                                                  </p>
+                                                  <div class="flex space-x-4">
+                                                            <a href="#" class="text-white hover:text-opacity-80">
+                                                                      <span class="lucide lucide-facebook"
+                                                                                style="width: 20px; height: 20px;"></span>
+                                                            </a>
+                                                            <a href="#" class="text-white hover:text-opacity-80">
+                                                                      <span class="lucide lucide-twitter"
+                                                                                style="width: 20px; height: 20px;"></span>
+                                                            </a>
+                                                            <a href="#" class="text-white hover:text-opacity-80">
+                                                                      <span class="lucide lucide-instagram"
+                                                                                style="width: 20px; height: 20px;"></span>
+                                                            </a>
+                                                  </div>
+                                        </div>
+
+                                        <div>
+                                                  <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+                                                  <ul class="space-y-2">
+                                                            <li><a href="index.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Home</a>
+                                                            </li>
+                                                            <li><a href="about.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">About
+                                                                                Us</a></li>
+                                                            <li><a href="donors.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Find
+                                                                                Donors</a></li>
+                                                            <li><a href="requests.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Blood
+                                                                                Requests</a></li>
+                                                            <li><a href="contact.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Contact
+                                                                                Us</a></li>
+                                                  </ul>
+                                        </div>
+
+                                        <div>
+                                                  <h3 class="font-semibold text-lg mb-4">Resources</h3>
+                                                  <ul class="space-y-2">
+                                                            <li><a href="faq.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">FAQs</a>
+                                                            </li>
+                                                            <li><a href="eligibility.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Eligibility</a>
+                                                            </li>
+                                                            <li><a href="blog.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Blog</a>
+                                                            </li>
+                                                            <li><a href="privacy.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Privacy
+                                                                                Policy</a></li>
+                                                            <li><a href="terms.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Terms
+                                                                                of Service</a></li>
+                                                  </ul>
+                                        </div>
+
+                                        <div>
+                                                  <h3 class="font-semibold text-lg mb-4">Contact</h3>
+                                                  <address class="not-italic text-sm space-y-2">
+                                                            <p>123 Blood Center St.</p>
+                                                            <p>City, State 12345</p>
+                                                            <p>Email: info@bloodconnect.com</p>
+                                                            <p>Phone: (123) 456-7890</p>
+                                                  </address>
+                                        </div>
+                              </div>
+
+                              <div class="border-t border-white/20 pt-6 text-center text-sm">
+                                        <p>Contact us at: info@bloodconnect.com</p>
+                                        <button
+                                                  class="mt-2 px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-90 transition-colors">
+                                                  Get Involved
+                                        </button>
+                                        <p class="mt-4">© 2025 BloodConnect. All rights reserved.</p>
+                              </div>
+                    </div>
+          </footer>
+
+          <!-- Scripts -->
+          <script src="https://unpkg.com/lucide@latest"></script>
+          <script src="scripts.js" type="module"></script>
+</body>
+
+</html>

@@ -1,8 +1,15 @@
-const supabase = require('../config/supabase');
-const User = require('../models/User');
+import dotenv from 'dotenv';
+dotenv.config();
 
-// Authenticate user with Supabase token
-exports.auth = async (req, res, next) => {
+import { createClient } from '@supabase/supabase-js';
+import User from '../models/User.js';
+
+// Initialize Supabase client
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export const auth = async (req, res, next) => {
   try {
     // Get token from header
     const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -31,8 +38,8 @@ exports.auth = async (req, res, next) => {
   }
 };
 
-// Ensure user exists in MongoDB
-exports.ensureUserInMongoDB = async (req, res, next) => {
+// Middleware to check if user exists in MongoDB and create if not
+export const ensureUserInMongoDB = async (req, res, next) => {
   try {
     if (!req.user || !req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
@@ -53,11 +60,11 @@ exports.ensureUserInMongoDB = async (req, res, next) => {
       user = new User({
         supabaseId: supabaseUser.id,
         email: supabaseUser.email,
-        name: supabaseUser.user_metadata?.name || supabaseUser.email.split('@')[0],
-        bloodType: supabaseUser.user_metadata?.bloodType || 'Unknown',
-        location: supabaseUser.user_metadata?.location || '',
-        phone: supabaseUser.user_metadata?.phone || '',
-        isDonor: supabaseUser.user_metadata?.isDonor || false
+        name: supabaseUser.user_metadata.name || supabaseUser.email.split('@')[0],
+        bloodType: supabaseUser.user_metadata.bloodType || 'Unknown',
+        location: supabaseUser.user_metadata.location || '',
+        phone: supabaseUser.user_metadata.phone || '',
+        isDonor: supabaseUser.user_metadata.isDonor || false
       });
 
       await user.save();

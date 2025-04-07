@@ -1,0 +1,19 @@
+{
+  "name": "bloodconnect",
+  "version": "1.0.0",
+  "description": "Blood donation platform connecting donors with those in need",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npx http-server -p 8081"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "child_process": "^1.0.2",
+    "i": "^0.3.7",
+    "path": "^0.12.7"
+  },
+  "author": "",
+  "license": "ISC"
+}

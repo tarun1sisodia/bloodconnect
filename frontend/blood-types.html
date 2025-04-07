@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blood Types - BloodConnect</title>
+    <meta name="description" content="Learn about different blood types and compatibility for blood donation" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e53e3e", // Red color
+              secondary: "#f56565",
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+  </head>
+
+  <body class="min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-primary text-white py-4">
+      <div class="container mx-auto flex items-center justify-between px-4">
+        <a href="index.html" class="flex items-center gap-2 text-xl font-bold">
+          <span class="lucide lucide-droplet h-6 w-6"></span>
+          <span>BloodConnect</span>
+        </a>
+        
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="index.html" class="hover:text-opacity-80 transition-colors">Home</a>
+          <a href="about.html" class="hover:text-opacity-80 transition-colors">About</a>
+          <a href="donors.html" class="hover:text-opacity-80 transition-colors">Donors</a>
+          <a href="requests.html" class="hover:text-opacity-80 transition-colors">Requests</a>
+          <a href="contact.html" class="hover:text-opacity-80 transition-colors">Contact</a>
+        </nav>
+        
+        <div class="flex items-center gap-3">
+          <a href="login.html" class="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Login</a>
+          <a href="register.html" class="hidden md:block bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Register</a>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobileMenuButton" class="md:hidden text-white">
+          <span class="lucide lucide-menu h-6 w-6"></span>
+        </button>
+      </div>
+      
+      <!-- Mobile menu (hidden by default) -->
+      <div id="mobileMenu" class="md:hidden hidden px-4 py-2 bg-primary/90">
+        <nav class="flex flex-col space-y-2">
+          <a href="index.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Home</a>
+          <a href="about.html" class="text-white py-2 hover:text-opacity-80 transition-colors">About</a>
+          <a href="donors.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Donors</a>
+          <a href="requests.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Requests</a>
+          <a href="contact.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Contact</a>
+          <a href="register.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-3xl font-bold text-center mb-8">Understanding Blood Types</h1>
+      
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-gray-50 p-6 rounded-lg mb-10">
+          <h2 class="text-2xl font-semibold mb-4">What Are Blood Types?</h2>
+          <p class="text-gray-700 mb-4">
+            Blood types are determined by the presence or absence of certain antigens – substances that can trigger an immune response – on the surface of red blood cells. There are four main blood groups: A, B, AB, and O.
+          </p>
+          <p class="text-gray-700">
+            Additionally, blood is classified by the Rhesus (Rh) factor, which is either present (positive) or absent (negative). The combination of these two classifications results in the eight common blood types: A+, A-, B+, B-, AB+, AB-, O+, and O-.
+          </p>
+        </div>
+        
+        <!-- Blood Type Chart -->
+        <h2 class="text-2xl font-semibold mb-4">Blood Types Compatibility Chart</h2>
+        <div class="overflow-x-auto mb-10">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="border border-gray-300 px-4 py-3 text-left">Blood Type</th>
+                <th class="border border-gray-300 px-4 py-3 text-left">Can Donate To</th>
+                <th class="border border-gray-300 px-4 py-3 text-left">Can Receive From</th>
+                <th class="border border-gray-300 px-4 py-3 text-center">Population %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-gray-300 px-4 py-3 font-semibold">A+</td>
+                <td class="border border-gray-300 px-4 py-3">A+, AB+</td>
+                <td class="border border-gray-300 px-4 py-3">A+, A-, O+, O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">34%</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 px-4 py-3 font-semibold">A-</td>
+                <td class="border border-gray-300 px-4 py-3">A+, A-, AB+, AB-</td>
+                <td class="border border-gray-300 px-4 py-3">A-, O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">6%</td>
+              </tr>
+              <tr>
+                <td class="border border-gray-300 px-4 py-3 font-semibold">B+</td>
+                <td class="border border-gray-300 px-4 py-3">B+, AB+</td>
+                <td class="border border-gray-300 px-4 py-3">B+, B-, O+, O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">9%</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 px-4 py-3 font-semibold">B-</td>
+                <td class="border border-gray-300 px-4 py-3">B+, B-, AB+, AB-</td>
+                <td class="border border-gray-300 px-4 py-3">B-, O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">2%</td>
+              </tr>
+              <tr>
+                <td class="border border-gray-300 px-4 py-3 font-semibold">AB+</td>
+                <td class="border border-gray-300 px-4 py-3">AB+</td>
+                <td class="border border-gray-300 px-4 py-3">All Types</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">3%</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 px-4 py-3 font-semibold">AB-</td>
+                <td class="border border-gray-300 px-4 py-3">AB+, AB-</td>
+                <td class="border border-gray-300 px-4 py-3">A-, B-, AB-, O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">1%</td>
+              </tr>
+              <tr>
+                <td class="border border-gray-300 px-4 py-3 font-semibold">O+</td>
+                <td class="border border-gray-300 px-4 py-3">O+, A+, B+, AB+</td>
+                <td class="border border-gray-300 px-4 py-3">O+, O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">38%</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="border border-gray-300 px-4 py-3 font-semibold">O-</td>
+                <td class="border border-gray-300 px-4 py-3">All Types</td>
+                <td class="border border-gray-300 px-4 py-3">O-</td>
+                <td class="border border-gray-300 px-4 py-3 text-center">7%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Visual Compatibility Diagram -->
+        <h2 class="text-2xl font-semibold mb-4">Blood Type Compatibility Diagram</h2>
+        <div class="bg-white p-6 rounded-lg border border-gray-200 mb-10">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-xl font-medium mb-4">Who Can Donate To Whom</h3>
+              <div class="space-y-4">
+                <div class="flex items-center">
+                  <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                    O-
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">Universal Donor</p>
+                    <p class="text-sm text-gray-600">Can donate to all blood types</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center">
+                  <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                    AB+
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">Universal Recipient</p>
+                    <p class="text-sm text-gray-600">Can receive from all blood types</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center">
+                  <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                    O+
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium">Most Common Type</p>
+                    <p class="text-sm text-gray-600">Can donate to all positive types</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="hidden md:block">
+              <!-- This would be a diagram image in a real implementation -->
+              <div class="h-64 border border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                <p class="text-gray-500">Blood Type Compatibility Diagram</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Importance of Blood Type Matching -->
+        <div class="bg-gray-50 p-6 rounded-lg mb-10">
+          <h2 class="text-2xl font-semibold mb-4">Why Blood Type Matching Is Important</h2>
+          <p class="text-gray-700 mb-4">
+            When a person receives blood that's incompatible with their own, their immune system can reject the foreign blood cells, triggering a potentially life-threatening reaction. This is why proper blood type matching is crucial before any transfusion.
+          </p>
+          <p class="text-gray-700">
+            In emergency situations where there isn't time to determine blood type, O- blood (universal donor) may be used for transfusions, but this is only a temporary measure until type-specific blood becomes available.
+          </p>
+        </div>
+        
+        <!-- Finding Out Your Blood Type -->
+        <div class="bg-white p-6 rounded-lg border border-gray-200 mb-10">
+          <h2 class="text-2xl font-semibold mb-4">How to Find Out Your Blood Type</h2>
+          <p class="text-gray-700 mb-4">
+            There are several ways to determine your blood type:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-gray-700 mb-6">
+            <li>Donate blood - blood donation centers will typically inform you of your blood type</li>
+            <li>Ask your doctor to order a blood type test</li>
+            <li>Check your birth certificate or military ID, which may include blood type information</li>
+            <li>Look at past medical records, especially if you've had surgery</li>
+            <li>Use an at-home blood typing kit (though these are less accurate than lab tests)</li>
+          </ul>
+          <div class="flex justify-center">
+            <a href="register.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md font-medium">
+              Register to Donate Blood
+            </a>
+          </div>
+        </div>
+        
+        <!-- Blood Type Facts -->
+        <h2 class="text-2xl font-semibold mb-4">Interesting Blood Type Facts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          <div class="bg-white p-5 rounded-lg border border-gray-200">
+            <div class="text-primary mb-3">
+              <span class="lucide lucide-heart h-5 w-5"></span>
+            </div>
+            <h3 class="font-medium mb-2">Blood Type and Geography</h3>
+            <p class="text-sm text-gray-700">
+              Blood type distribution varies by geographic region and ethnicity. For example, B type blood is more common in Asian countries, while O is predominant in Central and South America.
+            </p>
+          </div>
+          
+          <div class="bg-white p-5 rounded-lg border border-gray-200">
+            <div class="text-primary mb-3">
+              <span class="lucide lucide-history h-5 w-5"></span>
+            </div>
+            <h3 class="font-medium mb-2">Blood Type History</h3>
+            <p class="text-sm text-gray-700">
+              The ABO blood group system was discovered by Karl Landsteiner in 1901, earning him the Nobel Prize in Physiology or Medicine in 1930 for this groundbreaking discovery.
+            </p>
+          </div>
+          
+          <div class="bg-white p-5 rounded-lg border border-gray-200">
+            <div class="text-primary mb-3">
+              <span class="lucide lucide-flask h-5 w-5"></span>
+            </div>
+            <h3 class="font-medium mb-2">Beyond ABO</h3>
+            <p class="text-sm text-gray-700">
+              While ABO and Rh are the most important for transfusions, scientists have identified 38 major blood group systems with more than 600 different blood group antigens.
+            </p>
+          </div>
+          
+          <div class="bg-white p-5 rounded-lg border border-gray-200">
+            <div class="text-primary mb-3">
+              <span class="lucide lucide-calendar h-5 w-5"></span>
+            </div>
+            <h3 class="font-medium mb-2">Blood Type Inheritance</h3>
+            <p class="text-sm text-gray-700">
+              Blood type is inherited from your parents, but doesn't follow a simple pattern. For example, two type A parents can have a type O child if both parents carry the recessive O gene.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="lucide lucide-droplet h-6 w-6"></span>
+              <span class="text-xl font-bold">BloodConnect</span>
+            </div>
+            <p class="text-sm mb-4">
+              Connecting donors with those in need to save lives through blood donation.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-facebook" style="width: 20px; height: 20px;"></span>
+              </a>
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-twitter" style="width: 20px; height: 20px;"></span>
+              </a>
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-instagram" style="width: 20px; height: 20px;"></span>
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="index.html" class="text-white hover:text-opacity-80 text-sm">Home</a></li>
+              <li><a href="about.html" class="text-white hover:text-opacity-80 text-sm">About Us</a></li>
+              <li><a href="donors.html" class="text-white hover:text-opacity-80 text-sm">Find Donors</a></li>
+              <li><a href="requests.html" class="text-white hover:text-opacity-80 text-sm">Blood Requests</a></li>
+              <li><a href="contact.html" class="text-white hover:text-opacity-80 text-sm">Contact Us</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="faq.html" class="text-white hover:text-opacity-80 text-sm">FAQs</a></li>
+              <li><a href="eligibility.html" class="text-white hover:text-opacity-80 text-sm">Eligibility</a></li>
+              <li><a href="blog.html" class="text-white hover:text-opacity-80 text-sm">Blog</a></li>
+              <li><a href="privacy.html" class="text-white hover:text-opacity-80 text-sm">Privacy Policy</a></li>
+              <li><a href="terms.html" class="text-white hover:text-opacity-80 text-sm">Terms of Service</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Contact</h3>
+            <address class="not-italic text-sm space-y-2">
+              <p>123 Blood Center St.</p>
+              <p>City, State 12345</p>
+              <p>Email: info@bloodconnect.com</p>
+              <p>Phone: (123) 456-7890</p>
+            </address>
+          </div>
+        </div>
+        
+        <div class="border-t border-white/20 pt-6 text-center text-sm">
+          <p>Contact us at: info@bloodconnect.com</p>
+          <button class="mt-2 px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-90 transition-colors">
+            Get Involved
+          </button>
+          <p class="mt-4">© 2025 BloodConnect. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>

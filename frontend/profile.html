@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>My Profile - BloodConnect</title>
+          <meta name="description" content="Manage your BloodConnect profile and donation history" />
+          <script src="https://cdn.tailwindcss.com"></script>
+          <script>
+                    tailwind.config = {
+                              theme: {
+                                        extend: {
+                                                  colors: {
+                                                            primary: "#e53e3e", // Red color
+                                                            secondary: "#f56565",
+                                                  },
+                                        },
+                              },
+                    };
+          </script>
+          <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+</head>
+
+<body class="min-h-screen bg-gray-50">
+          <!-- Navbar -->
+          <header class="bg-primary text-white py-4">
+                    <div class="container mx-auto flex items-center justify-between px-4">
+                              <a href="index.html" class="flex items-center gap-2 text-xl font-bold">
+                                        <span class="lucide lucide-droplet h-6 w-6"></span>
+                                        <span>BloodConnect</span>
+                              </a>
+
+                              <nav class="hidden md:flex items-center gap-6">
+                                        <a href="index.html" class="hover:text-opacity-80 transition-colors">Home</a>
+                                        <a href="about.html" class="hover:text-opacity-80 transition-colors">About</a>
+                                        <a href="donors.html" class="hover:text-opacity-80 transition-colors">Donors</a>
+                                        <a href="requests.html"
+                                                  class="hover:text-opacity-80 transition-colors">Requests</a>
+                                        <a href="contact.html"
+                                                  class="hover:text-opacity-80 transition-colors">Contact</a>
+                              </nav>
+
+                              <div class="flex items-center gap-3">
+                                        <a href="login.html"
+                                                  class="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Login</a>
+                                        <a href="register.html"
+                                                  class="hidden md:block bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Register</a>
+                              </div>
+
+                              <!-- Mobile menu button -->
+                              <button id="mobileMenuButton" class="md:hidden text-white">
+                                        <span class="lucide lucide-menu h-6 w-6"></span>
+                              </button>
+                    </div>
+
+                    <!-- Mobile menu (hidden by default) -->
+                    <div id="mobileMenu" class="md:hidden hidden px-4 py-2 bg-primary/90">
+                              <nav class="flex flex-col space-y-2">
+                                        <a href="index.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Home</a>
+                                        <a href="about.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">About</a>
+                                        <a href="donors.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Donors</a>
+                                        <a href="requests.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Requests</a>
+                                        <a href="contact.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Contact</a>
+                                        <a href="register.html"
+                                                  class="text-white py-2 hover:text-opacity-80 transition-colors">Register</a>
+                              </nav>
+                    </div>
+          </header>
+
+          <!-- Page Content -->
+          <div class="container mx-auto px-4 py-12">
+                    <div class="max-w-4xl mx-auto">
+                              <h1 class="text-3xl font-bold mb-8">My Profile</h1>
+
+                              <div id="profileContainer">
+                                        <div class="flex justify-center items-center h-64">
+                                                  <div
+                                                            class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary">
+                                                  </div>
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+
+          <!-- Footer -->
+          <footer class="bg-primary text-white py-8 mt-12">
+                    <div class="container mx-auto px-4">
+                              <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                                        <div>
+                                                  <div class="flex items-center gap-2 mb-4">
+                                                            <span class="lucide lucide-droplet h-6 w-6"></span>
+                                                            <span class="text-xl font-bold">BloodConnect</span>
+                                                  </div>
+                                                  <p class="text-sm mb-4">
+                                                            Connecting donors with those in need to save lives through
+                                                            blood donation.
+                                                  </p>
+                                                  <div class="flex space-x-4">
+                                                            <a href="#" class="text-white hover:text-opacity-80">
+                                                                      <span class="lucide lucide-facebook"
+                                                                                style="width: 20px; height: 20px;"></span>
+                                                            </a>
+                                                            <a href="#" class="text-white hover:text-opacity-80">
+                                                                      <span class="lucide lucide-twitter"
+                                                                                style="width: 20px; height: 20px;"></span>
+                                                            </a>
+                                                            <a href="#" class="text-white hover:text-opacity-80">
+                                                                      <span class="lucide lucide-instagram"
+                                                                                style="width: 20px; height: 20px;"></span>
+                                                            </a>
+                                                  </div>
+                                        </div>
+
+                                        <div>
+                                                  <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+                                                  <ul class="space-y-2">
+                                                            <li><a href="index.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Home</a>
+                                                            </li>
+                                                            <li><a href="about.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">About
+                                                                                Us</a></li>
+                                                            <li><a href="donors.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Find
+                                                                                Donors</a></li>
+                                                            <li><a href="requests.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Blood
+                                                                                Requests</a></li>
+                                                            <li><a href="contact.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Contact
+                                                                                Us</a></li>
+                                                  </ul>
+                                        </div>
+
+                                        <div>
+                                                  <h3 class="font-semibold text-lg mb-4">Resources</h3>
+                                                  <ul class="space-y-2">
+                                                            <li><a href="faq.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">FAQs</a>
+                                                            </li>
+                                                            <li><a href="eligibility.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Eligibility</a>
+                                                            </li>
+                                                            <li><a href="blog.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Blog</a>
+                                                            </li>
+                                                            <li><a href="privacy.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Privacy
+                                                                                Policy</a></li>
+                                                            <li><a href="terms.html"
+                                                                                class="text-white hover:text-opacity-80 text-sm">Terms
+                                                                                of Service</a></li>
+                                                  </ul>
+                                        </div>
+
+                                        <div>
+                                                  <h3 class="font-semibold text-lg mb-4">Contact</h3>
+                                                  <address class="not-italic text-sm space-y-2">
+                                                            <p>123 Blood Center St.</p>
+                                                            <p>City, State 12345</p>
+                                                            <p>Email: info@bloodconnect.com</p>
+                                                            <p>Phone: (123) 456-7890</p>
+                                                  </address>
+                                        </div>
+                              </div>
+
+                              <div class="border-t border-white/20 pt-6 text-center text-sm">
+                                        <p>Contact us at: info@bloodconnect.com</p>
+                                        <button
+                                                  class="mt-2 px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-90 transition-colors">
+                                                  Get Involved
+                                        </button>
+                                        <p class="mt-4">© 2025 BloodConnect. All rights reserved.</p>
+                              </div>
+                    </div>
+          </footer>
+
+          <!-- Scripts -->
+          <script src="https://unpkg.com/lucide@latest"></script>
+          <script src="scripts.js" type="module"></script>
+</body>
+
+</html>

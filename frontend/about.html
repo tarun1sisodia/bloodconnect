@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - BloodConnect</title>
+    <meta name="description" content="Learn about BloodConnect's mission to connect blood donors with recipients" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e53e3e", // Red color
+              secondary: "#f56565",
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+  </head>
+
+  <body class="min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-primary text-white py-4">
+      <div class="container mx-auto flex items-center justify-between px-4">
+        <a href="index.html" class="flex items-center gap-2 text-xl font-bold">
+          <span class="lucide lucide-droplet h-6 w-6"></span>
+          <span>BloodConnect</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="index.html" class="hover:text-opacity-80 transition-colors">Home</a>
+          <a href="about.html" class="hover:text-opacity-80 transition-colors">About</a>
+          
+          <!-- Links visible to all users -->
+          <a href="donors.html" class="user-links hidden hover:text-opacity-80 transition-colors">Donors</a>
+          <a href="requests.html" class="user-links hidden hover:text-opacity-80 transition-colors">Requests</a>
+          <a href="dashboard.html" class="user-links hidden hover:text-opacity-80 transition-colors">Dashboard</a>
+          <a href="contact.html" class="hover:text-opacity-80 transition-colors">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <!-- Auth links (visible when logged out) -->
+          <div class="auth-links">
+            <a href="login.html" class="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Login</a>
+            <a href="register.html" class="hidden md:inline-block bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Register</a>
+          </div>
+          
+          <!-- User links (visible when logged in) -->
+          <div class="user-links hidden">
+            <span class="mr-2">Welcome, <span class="user-name">User</span></span>
+            <a href="profile.html" class="text-white hover:text-opacity-80 mr-4">
+              <span class="lucide lucide-user h-5 w-5"></span>
+            </a>
+            <button id="logoutBtn" class="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Logout</button>
+          </div>
+          
+          <button id="mobileMenuButton" class="md:hidden text-white">
+            <span class="lucide lucide-menu h-6 w-6"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="md:hidden hidden px-4 py-2">
+        <nav class="flex flex-col gap-2">
+          <a href="index.html" class="hover:text-opacity-80 transition-colors py-2">Home</a>
+          <a href="about.html" class="hover:text-opacity-80 transition-colors py-2">About</a>
+          <a href="donors.html" class="user-links hidden hover:text-opacity-80 transition-colors py-2">Donors</a>
+          <a href="requests.html" class="user-links hidden hover:text-opacity-80 transition-colors py-2">Requests</a>
+          <a href="dashboard.html" class="user-links hidden hover:text-opacity-80 transition-colors py-2">Dashboard</a>
+          <a href="contact.html" class="hover:text-opacity-80 transition-colors py-2">Contact</a>
+          <a href="register.html" class="auth-links hover:text-opacity-80 transition-colors py-2">Register</a>
+        </nav>
+      </div>
+    </header>
+      
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-3xl font-bold text-center mb-12">About Us</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div class="bg-gray-50 p-8 rounded-lg">
+          <h2 class="text-2xl font-semibold mb-4">Our Mission</h2>
+          <p class="text-gray-700">
+            At BloodConnect, our mission is to ensure a reliable supply of safe blood through a robust donor management system. We strive to connect donors with those in need and make the process seamless and efficient.
+          </p>
+        </div>
+        
+        <div class="bg-gray-50 p-8 rounded-lg">
+          <h2 class="text-2xl font-semibold mb-4">Our Vision</h2>
+          <p class="text-gray-700">
+            We envision a world where everyone has timely access to the blood they need. Through technology and community engagement, we aim to bridge the gap between donors and recipients.
+          </p>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div class="bg-gray-50 p-8 rounded-lg">
+          <h2 class="text-2xl font-semibold mb-4">Our Values</h2>
+          <ul class="space-y-2 text-gray-700">
+            <li>Compassion</li>
+            <li>Integrity</li>
+            <li>Innovation</li>
+            <li>Community</li>
+          </ul>
+        </div>
+        
+        <div class="bg-gray-50 p-8 rounded-lg">
+          <h2 class="text-2xl font-semibold mb-4">Our Impact</h2>
+          <p class="text-gray-700">
+            Since our inception, BloodConnect has facilitated thousands of successful blood donations, helping save countless lives and supporting communities worldwide.
+          </p>
+        </div>
+      </div>
+      
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 text-center">Testimonials</h2>
+        
+        <div class="bg-gray-50 p-6 rounded-lg mb-4">
+          <blockquote class="text-gray-700 italic">
+            "BloodConnect made donating blood a breeze! The staff was friendly, and the process was simple. I feel great knowing my donation can save lives."
+          </blockquote>
+          <p class="text-right font-medium mt-2">- Alex Turner</p>
+        </div>
+        
+        <div class="bg-gray-50 p-6 rounded-lg">
+          <blockquote class="text-gray-700 italic">
+            "As a recipient, I am incredibly thankful for BloodConnect's efforts. Their system ensured I received the blood I needed promptly."
+          </blockquote>
+          <p class="text-right font-medium mt-2">- Jamie Lee</p>
+        </div>
+      </div>
+    </div>
+      
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="lucide lucide-droplet h-6 w-6"></span>
+              <span class="text-xl font-bold">BloodConnect</span>
+            </div>
+            <p class="text-sm mb-4">
+              Connecting donors with those in need to save lives through blood donation.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-facebook" style="width: 20px; height: 20px;"></span>
+              </a>
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-twitter" style="width: 20px; height: 20px;"></span>
+              </a>
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-instagram" style="width: 20px; height: 20px;"></span>
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="index.html" class="text-white hover:text-opacity-80 text-sm">Home</a></li>
+              <li><a href="about.html" class="text-white hover:text-opacity-80 text-sm">About Us</a></li>
+              <li><a href="donors.html" class="text-white hover:text-opacity-80 text-sm">Find Donors</a></li>
+              <li><a href="requests.html" class="text-white hover:text-opacity-80 text-sm">Blood Requests</a></li>
+              <li><a href="contact.html" class="text-white hover:text-opacity-80 text-sm">Contact Us</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="faq.html" class="text-white hover:text-opacity-80 text-sm">FAQs</a></li>
+              <li><a href="eligibility.html" class="text-white hover:text-opacity-80 text-sm">Eligibility</a></li>
+              <li><a href="blog.html" class="text-white hover:text-opacity-80 text-sm">Blog</a></li>
+              <li><a href="privacy.html" class="text-white hover:text-opacity-80 text-sm">Privacy Policy</a></li>
+              <li><a href="terms.html" class="text-white hover:text-opacity-80 text-sm">Terms of Service</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Contact</h3>
+            <address class="not-italic text-sm space-y-2">
+              <p>123 Blood Center St.</p>
+              <p>City, State 12345</p>
+              <p>Email: info@bloodconnect.com</p>
+              <p>Phone: (123) 456-7890</p>
+            </address>
+          </div>
+        </div>
+        
+        <div class="border-t border-white/20 pt-6 text-center text-sm">
+          <p>Contact us at: info@bloodconnect.com</p>
+          <button class="mt-2 px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-90 transition-colors">
+            Get Involved
+          </button>
+          <p class="mt-4">© 2025 BloodConnect. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
+    <script type="module">
+      import { updateAuthUI, logout } from './assets/js/utils/authCheck.js';
+      
+      // Update UI based on authentication state
+      document.addEventListener('DOMContentLoaded', () => {
+        updateAuthUI();
+        
+        // Setup logout button
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', logout);
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

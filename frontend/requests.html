@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blood Requests - BloodConnect</title>
+    <meta name="description" content="View all blood requests or create a new blood request" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e53e3e", // Red color
+              secondary: "#f56565",
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+  </head>
+
+  <body class="min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-primary text-white py-4">
+      <div class="container mx-auto flex items-center justify-between px-4">
+        <a href="index.html" class="flex items-center gap-2 text-xl font-bold">
+          <span class="lucide lucide-droplet h-6 w-6"></span>
+          <span>BloodConnect</span>
+        </a>
+        
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="index.html" class="hover:text-opacity-80 transition-colors">Home</a>
+          <a href="about.html" class="hover:text-opacity-80 transition-colors">About</a>
+          <a href="donors.html" class="hover:text-opacity-80 transition-colors">Donors</a>
+          <a href="requests.html" class="hover:text-opacity-80 transition-colors">Requests</a>
+          <a href="contact.html" class="hover:text-opacity-80 transition-colors">Contact</a>
+        </nav>
+        
+        <div class="flex items-center gap-3">
+          <a href="login.html" class="bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Login</a>
+          <a href="register.html" class="hidden md:block bg-white text-primary hover:bg-gray-100 px-4 py-2 rounded-md font-medium">Register</a>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobileMenuButton" class="md:hidden text-white">
+          <span class="lucide lucide-menu h-6 w-6"></span>
+        </button>
+      </div>
+      
+      <!-- Mobile menu (hidden by default) -->
+      <div id="mobileMenu" class="md:hidden hidden px-4 py-2 bg-primary/90">
+        <nav class="flex flex-col space-y-2">
+          <a href="index.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Home</a>
+          <a href="about.html" class="text-white py-2 hover:text-opacity-80 transition-colors">About</a>
+          <a href="donors.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Donors</a>
+          <a href="requests.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Requests</a>
+          <a href="contact.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Contact</a>
+          <a href="register.html" class="text-white py-2 hover:text-opacity-80 transition-colors">Register</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Blood Requests</h1>
+        <a href="new-request.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md font-medium">
+          <span class="lucide lucide-plus h-4 w-4 inline-block mr-1"></span>
+          New Request
+        </a>
+      </div>
+      
+      <!-- Search Filters -->
+      <div class="bg-gray-50 p-6 rounded-lg mb-8">
+        <h2 class="text-xl font-semibold mb-4">Filter Requests</h2>
+        <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label for="bloodType" class="block text-sm font-medium text-gray-700 mb-1">Blood Type</label>
+            <select id="bloodType" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="">All Blood Types</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+            <input 
+              type="text" 
+              id="location" 
+              placeholder="City, State or Zip" 
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+          </div>
+          
+          <div>
+            <label for="urgency" class="block text-sm font-medium text-gray-700 mb-1">Urgency</label>
+            <select id="urgency" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="">All Levels</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          
+          <div class="flex items-end">
+            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md font-medium">
+              Filter
+            </button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Requests List -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Request Card 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center">
+              <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                AB+
+              </div>
+              <div>
+                <h3 class="font-semibold">City Hospital</h3>
+                <p class="text-sm text-gray-600">Manhattan, NY</p>
+              </div>
+            </div>
+            <div class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-medium">
+              Urgent
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-sm mb-2">
+              <span class="font-medium">Required Units:</span> 3
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Posted:</span> 2 hours ago
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Contact:</span> Dr. Johnson (212-555-0123)
+            </p>
+            <p class="text-sm text-gray-700">
+              Needed for emergency surgery scheduled for tomorrow morning.
+            </p>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md text-sm">
+              Respond
+            </button>
+            <button class="border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded-md text-sm">
+              View Details
+            </button>
+          </div>
+        </div>
+        
+        <!-- Request Card 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center">
+              <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                O-
+              </div>
+              <div>
+                <h3 class="font-semibold">Metro Medical Center</h3>
+                <p class="text-sm text-gray-600">Brooklyn, NY</p>
+              </div>
+            </div>
+            <div class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-medium">
+              Medium
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-sm mb-2">
+              <span class="font-medium">Required Units:</span> 2
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Posted:</span> 1 day ago
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Contact:</span> Nurse Taylor (718-555-0456)
+            </p>
+            <p class="text-sm text-gray-700">
+              Needed for patient with chronic condition requiring regular transfusions.
+            </p>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md text-sm">
+              Respond
+            </button>
+            <button class="border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded-md text-sm">
+              View Details
+            </button>
+          </div>
+        </div>
+        
+        <!-- Request Card 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center">
+              <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                A+
+              </div>
+              <div>
+                <h3 class="font-semibold">County General Hospital</h3>
+                <p class="text-sm text-gray-600">Queens, NY</p>
+              </div>
+            </div>
+            <div class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-medium">
+              Standard
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-sm mb-2">
+              <span class="font-medium">Required Units:</span> 5
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Posted:</span> 3 days ago
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Contact:</span> Blood Bank (347-555-0789)
+            </p>
+            <p class="text-sm text-gray-700">
+              Replenishing hospital blood bank supplies for upcoming procedures.
+            </p>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md text-sm">
+              Respond
+            </button>
+            <button class="border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded-md text-sm">
+              View Details
+            </button>
+          </div>
+        </div>
+        
+        <!-- Request Card 4 -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center">
+              <div class="bg-red-100 text-primary font-bold rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                B-
+              </div>
+              <div>
+                <h3 class="font-semibold">St. Mary's Hospital</h3>
+                <p class="text-sm text-gray-600">Bronx, NY</p>
+              </div>
+            </div>
+            <div class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-medium">
+              Urgent
+            </div>
+          </div>
+          <div class="mb-4">
+            <p class="text-sm mb-2">
+              <span class="font-medium">Required Units:</span> 4
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Posted:</span> 5 hours ago
+            </p>
+            <p class="text-sm mb-2">
+              <span class="font-medium">Contact:</span> Dr. Martinez (646-555-1230)
+            </p>
+            <p class="text-sm text-gray-700">
+              Needed for accident victim requiring immediate surgery.
+            </p>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md text-sm">
+              Respond
+            </button>
+            <button class="border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded-md text-sm">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="flex justify-center mt-8">
+        <nav class="inline-flex shadow-sm">
+          <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
+            Previous
+          </a>
+          <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-primary text-white">
+            1
+          </a>
+          <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+            2
+          </a>
+          <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+            3
+          </a>
+          <a href="#" class="px-3 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
+            Next
+          </a>
+        </nav>
+      </div>
+    </div>
+      
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <span class="lucide lucide-droplet h-6 w-6"></span>
+              <span class="text-xl font-bold">BloodConnect</span>
+            </div>
+            <p class="text-sm mb-4">
+              Connecting donors with those in need to save lives through blood donation.
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-facebook" style="width: 20px; height: 20px;"></span>
+              </a>
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-twitter" style="width: 20px; height: 20px;"></span>
+              </a>
+              <a href="#" class="text-white hover:text-opacity-80">
+                <span class="lucide lucide-instagram" style="width: 20px; height: 20px;"></span>
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="index.html" class="text-white hover:text-opacity-80 text-sm">Home</a></li>
+              <li><a href="about.html" class="text-white hover:text-opacity-80 text-sm">About Us</a></li>
+              <li><a href="donors.html" class="text-white hover:text-opacity-80 text-sm">Find Donors</a></li>
+              <li><a href="requests.html" class="text-white hover:text-opacity-80 text-sm">Blood Requests</a></li>
+              <li><a href="contact.html" class="text-white hover:text-opacity-80 text-sm">Contact Us</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Resources</h3>
+            <ul class="space-y-2">
+              <li><a href="faq.html" class="text-white hover:text-opacity-80 text-sm">FAQs</a></li>
+              <li><a href="eligibility.html" class="text-white hover:text-opacity-80 text-sm">Eligibility</a></li>
+              <li><a href="blog.html" class="text-white hover:text-opacity-80 text-sm">Blog</a></li>
+              <li><a href="privacy.html" class="text-white hover:text-opacity-80 text-sm">Privacy Policy</a></li>
+              <li><a href="terms.html" class="text-white hover:text-opacity-80 text-sm">Terms of Service</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Contact</h3>
+            <address class="not-italic text-sm space-y-2">
+              <p>123 Blood Center St.</p>
+              <p>City, State 12345</p>
+              <p>Email: info@bloodconnect.com</p>
+              <p>Phone: (123) 456-7890</p>
+            </address>
+          </div>
+        </div>
+        
+        <div class="border-t border-white/20 pt-6 text-center text-sm">
+          <p>Contact us at: info@bloodconnect.com</p>
+          <button class="mt-2 px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-90 transition-colors">
+            Get Involved
+          </button>
+          <p class="mt-4">© 2025 BloodConnect. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>
